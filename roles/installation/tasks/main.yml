@@ -11,3 +11,9 @@
     firstmatch: yes
     line: "{{ mirror }}"
   tags: mirror
+
+- name: Install the Arch base packages
+  shell: pacstrap /mnt base
+  args:
+    creates: /mnt/bin
+  tags: pacstrap
