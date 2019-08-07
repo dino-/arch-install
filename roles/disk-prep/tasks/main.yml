@@ -23,6 +23,9 @@
     fstype: ext4
   tags: fsformat
 
+# These mount tasks also modify the /etc/fstab file, which we really don't need
+# but I guess is harmless when done to the install media's root partition.
+
 - name: Mount the new root partition
   mount:
     path: /mnt
