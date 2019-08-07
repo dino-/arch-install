@@ -7,6 +7,16 @@
 - Get machine's IP for the ansible inventory
 - If this isn't the first run, may need to remove this IP from the controller system's `.ssh/known_hosts` file
 
+Then edit the `inventory` file, changing the IP address and any other variables that need it. Refer to the newly-booted system for things like the devices in `/dev`
+
+## Running it
+
+    $ ansible-playbook -i inventory install.yml
+
+For development and debugging, use `--tags` to limit things:
+
+    $ ansible-playbook -i inventory install.yml --tags="pacstrap,genfstab"
+
 ## Ansible roles
 
 Pre-installation

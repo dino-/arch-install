@@ -1,6 +1,7 @@
 new-system:
   hosts:
     192.168.1.162:  # Set this after getting the new system on the network
+      ansible_connection: paramiko
       ansible_user: root  # Don't change this
       ansible_password: arch1  # No need to change if you've used this on the target
       drive: /dev/sda  # Set this to the drive we want to install Arch on
