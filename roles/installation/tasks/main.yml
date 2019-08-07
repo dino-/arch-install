@@ -17,3 +17,7 @@
   args:
     creates: /mnt/bin
   tags: pacstrap
+
+- name: Generate the fstab file
+  shell: genfstab -U /mnt >> /mnt/etc/fstab
+  tags: genfstab
