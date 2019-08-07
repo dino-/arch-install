@@ -1,0 +1,40 @@
+###############################################################################
+# Verify this system has uefi capability
+###############################################################################
+---
+
+- name: Partition the hard drive
+  shell: |
+    sgdisk --zap-all "{{ drive }}"
+    sgdisk --new=1:0:+512M --typecode=1:EF00 --change-name=1:boot "{{ drive }}"
+    sgdisk --largest-new=2 --typecode=2:8300 --change-name=2:root "{{ drive }}"
+  tags: partition
+
+- name: Format the boot partition
+  filesystem:
+    dev: "{{ boot_part }}"
+    fstype: vfat
+    opts: -F32
+  tags: fsformat
+
+- name: Format the root partition
+  filesystem:
+    dev: "{{ root_part }}"
+    fstype: ext4
+  tags: fsformat
+
+- name: Mount the new root partition
+  mount:
+    path: /mnt
+    src: "{{ root_part }}"
+    fstype: auto
+    state: mounted
+  tags: mount
+
+- name: Mount the new boot partition
+  mount:
+    path: /mnt/boot
+    src: "{{ boot_part }}"
+    fstype: auto
+    state: mounted
+  tags: mount

@@ -1,0 +1,38 @@
+###############################################################################
+#  Configures new KS Server
+#
+#  System Requirements:
+#  - target host is a machine freshly-booted with Arch Linux live
+#
+#  Setup: 
+#
+#  1. private_vars.json: template for defining private vars 
+#     - copy this file to your workspace and define appropriate values
+#       
+#  2. inventory: traget hosts are defined by an inventory file
+#     - copy the inventory/ksnitch file and define appropriate host names
+#
+#
+#  Running this playbook:
+#
+#     ansible-playbook 
+#       -i inventory install.yml
+#
+#  This is old stuff:
+#     ansible-playbook 
+#        --private-key=~/.ssh/your_ssh_key.pem
+#        --extra-vars "@private_vars.json"
+#        -i your-inventory/ksnitch init-server-playbook.yml
+# 
+#  Note: If you prefer to type your sudo password you can use "--ask-sudo-pass"  
+#        command line option instead of defining one in private_vars.json file.
+###############################################################################
+---
+- hosts: new-system
+  # remote_user: "{{ remote_user }}"
+  # become: True
+  gather_facts: True
+  roles: 
+    - verify-efi
+    - update-clock
+    - disk-prep

@@ -1,0 +1,7 @@
+###############################################################################
+# Verify this system has uefi capability
+###############################################################################
+---
+
+- name: Update the system clock
+  shell: timedatectl set-ntp true
