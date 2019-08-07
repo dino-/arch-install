@@ -2,9 +2,10 @@
 
 - Boot the Arch USB
 - Connect to the internet
-- Set the root user's password to `arch1`
+- Set the root user's password to `arch1` with `passwd`
 - Start sshd `# systemctl start sshd`
 - Get machine's IP for the ansible inventory
+- If this isn't the first run, may need to remove this IP from the controller system's `.ssh/known_hosts` file
 
 ## Ansible roles
 
