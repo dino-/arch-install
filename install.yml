@@ -36,3 +36,4 @@
     - verify-efi
     - update-clock
     - disk-prep
+    - installation

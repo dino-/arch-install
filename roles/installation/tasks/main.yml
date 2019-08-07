@@ -1,0 +1,13 @@
+###############################################################################
+# Install Arch Linux on the drive
+###############################################################################
+---
+
+- name: Set the pacman mirror
+  lineinfile:
+    path: /etc/pacman.d/mirrorlist
+    state: present
+    insertafter: "^$"
+    firstmatch: yes
+    line: "{{ mirror }}"
+  tags: mirror
