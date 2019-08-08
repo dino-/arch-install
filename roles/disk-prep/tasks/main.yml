@@ -18,14 +18,11 @@
     - encrypted
     - keyfile
 
-# We are using the template module here because lineinfile stubbornly insists
-# on including a newline in the file which is bad when included in a luks
-# passphrase
-
 - name: Put encryption key in the temp file
-  template:
-    src: keyfile.j2
+  copy:
     dest: "{{ keyfile.path }}"
+    content: "{{ luks_pass }}"
+    force: yes
   tags:
     - encrypted
     - keyfile
