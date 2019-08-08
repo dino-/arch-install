@@ -30,3 +30,21 @@
   tags:
     - locale
     - localeconf
+
+- name: Create the hostname file
+  copy:
+    dest: /mnt/etc/hostname
+    content: "{{ hostname }}\n"
+    force: no
+  tags:
+    - hostname
+
+- name: Add this host the hosts file
+  blockinfile:
+    path: /mnt/etc/hosts
+    block: |
+      127.0.0.1  localhost
+      ::1        localhost
+      127.0.1.1  {{ hostname }}.localdomain  {{ hostname }}
+  tags:
+    - hostname
