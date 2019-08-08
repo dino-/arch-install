@@ -1,14 +1,18 @@
 new-system:
   hosts:
     192.168.1.162:  # Set this after getting the new system on the network
-      ansible_connection: paramiko
-      ansible_user: root  # Don't change this
-      ansible_password: arch1  # No need to change if you've used this on the target
+      # Set these variables for your new system
       drive: /dev/sda  # Set this to the drive we want to install Arch on
       boot_part: /dev/sda1  # Adjust this accordingly
       root_part: /dev/sda2  # This too
-      cryptroot: /dev/mapper/cryptroot  # Don't change this
       luks_pass: "foo bar baz"  # Change to something secure
       # Use a mirror you know is close and fast
       mirror: "Server = http://mirror.umd.edu/archlinux/$repo/os/$arch\n"
       zone: America/New_York  # Relative to /usr/share/zoneinfo/
+      hostname: mycoolmachine  # The new machine name
+
+      # Probably don't need to change these
+      ansible_connection: paramiko
+      ansible_user: root  # Don't change this
+      ansible_password: arch1  # No need to change if you've used this on the target
+      cryptroot: /dev/mapper/cryptroot  # Don't change this
