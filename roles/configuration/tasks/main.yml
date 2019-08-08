@@ -1,0 +1,32 @@
+###############################################################################
+# Configure Arch Linux
+###############################################################################
+---
+
+- name: Set the time zone
+  shell: arch-chroot /mnt ln -sf "/usr/share/zoneinfo/{{ zone }}" /etc/localtime
+  tags: zone
+
+- name: Configure the hardware clock
+  shell: arch-chroot /mnt hwclock --systohc
+  tags: clock
+
+- name: Set the locale
+  replace:
+    path: /mnt/etc/locale.gen
+    regexp: "^#en_US.UTF-8.*"
+    replace: "en_US.UTF-8 UTF-8"
+  tags: locale
+
+- name: Generate the locale
+  shell: arch-chroot /mnt locale-gen
+  tags: locale
+
+- name: Create the locale conf file
+  copy:
+    dest: /mnt/etc/locale.conf
+    content: "LANG=en_US.UTF-8\n"
+    force: no
+  tags:
+    - locale
+    - localeconf

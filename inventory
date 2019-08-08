@@ -11,3 +11,4 @@ new-system:
       luks_pass: "foo bar baz"  # Change to something secure
       # Use a mirror you know is close and fast
       mirror: "Server = http://mirror.umd.edu/archlinux/$repo/os/$arch\n"
+      zone: America/New_York  # Relative to /usr/share/zoneinfo/

@@ -39,3 +39,5 @@
       tags: disk-prep
     - role: installation
       tags: installation
+    - role: configuration
+      tags: configuration
