@@ -10,6 +10,44 @@
     sgdisk --largest-new=2 --typecode=2:8300 --change-name=2:root "{{ drive }}"
   tags: partition
 
+- name: Create a temp file for the encryption key
+  tempfile:
+    state: file
+  register: keyfile
+  tags:
+    - encrypted
+    - keyfile
+
+# We are using the template module here because lineinfile stubbornly insists
+# on including a newline in the file which is bad when included in a luks
+# passphrase
+
+- name: Put encryption key in the temp file
+  template:
+    src: keyfile.j2
+    dest: "{{ keyfile.path }}"
+  tags:
+    - encrypted
+    - keyfile
+
+- name: Create the encrypted partition
+  shell: cryptsetup --batch-mode luksFormat "{{ root_part }}" "{{ keyfile.path }}"
+  tags: encrypted
+
+- name: Open the encrypted partition
+  shell: cryptsetup open --key-file "{{ keyfile.path }}" "{{ root_part }}" cryptroot
+  args:
+    creates: "{{ cryptroot }}"
+  tags: encrypted
+
+# Using shred here instead of the file module for extra security
+
+- name: Remove the keyfile
+  shell: shred -u "{{ keyfile.path }}"
+  args:
+    removes: "{{ keyfile.path }}"
+  tags: encrypted
+
 - name: Format the boot partition
   filesystem:
     dev: "{{ boot_part }}"
@@ -19,7 +57,7 @@
 
 - name: Format the root partition
   filesystem:
-    dev: "{{ root_part }}"
+    dev: "{{ cryptroot }}"
     fstype: ext4
   tags: fsformat
 
@@ -29,7 +67,7 @@
 - name: Mount the new root partition
   mount:
     path: /mnt
-    src: "{{ root_part }}"
+    src: "{{ cryptroot }}"
     fstype: auto
     state: mounted
   tags: mount

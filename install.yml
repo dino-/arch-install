@@ -35,5 +35,7 @@
   roles: 
     - verify-efi
     - update-clock
-    - disk-prep
-    - installation
+    - role: disk-prep
+      tags: disk-prep
+    - role: installation
+      tags: installation
