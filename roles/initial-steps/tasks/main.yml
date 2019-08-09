@@ -1,7 +1,16 @@
 ###############################################################################
-# Update the system clock
+# Initial steps
 ###############################################################################
 ---
+
+- name: Verify the boot mode
+  stat:
+    path: /sys/firmware/efi/efivars
+  register: efivars
+
+- fail:
+    msg: Target system is not UEFI-capabile. Aborting.
+  when: efivars.stat.exists == false
 
 - name: Update the system clock
   shell: timedatectl set-ntp true

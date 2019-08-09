@@ -4,8 +4,8 @@
 - hosts: new-system
   gather_facts: True
   roles: 
-    - verify-efi
-    - update-clock
+    - role: initial-steps
+      tags: initial-steps
     - role: disk-prep
       tags: disk-prep
     - role: installation
