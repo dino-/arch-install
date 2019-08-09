@@ -59,3 +59,24 @@
     shell: arch-chroot /mnt mkinitcpio -p linux
     tags: mkinitcpio
   tags: initramfs
+
+- name: Configure the boot loader
+  block:
+  - name: Install systemd-boot
+    shell: arch-chroot /mnt bootctl --path=/boot install
+    tags: bootctl
+
+  - name: Discover the root partition's UUID
+    shell: blkid --match-tag=UUID --output=value {{ root_part }}
+    register: root_uuid
+
+  - name: Create the bootloader loader config
+    copy:
+      src: loader.conf
+      dest: /mnt/boot/loader/loader.conf
+
+  - name: Configure the arch bootloader entry
+    template:
+      src: arch.conf.j2
+      dest: /mnt/boot/loader/entries/arch.conf
+  tags: bootloader
