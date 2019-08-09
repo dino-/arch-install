@@ -49,9 +49,15 @@
   tags:
     - hostname
 
-- name: Modify the mkinitcpio.conf HOOKS to add encrypt
-  replace:
-    path: /mnt/etc/mkinitcpio.conf
-    regexp: '^(HOOKS.*block)( filesystems.*)$'
-    replace: '\1 encrypt\2'
+- name: Configure initramfs
+  block:
+  - name: Modify the mkinitcpio.conf HOOKS to add encrypt
+    replace:
+      path: /mnt/etc/mkinitcpio.conf
+      regexp: '^(HOOKS.*block)( filesystems.*)$'
+      replace: '\1 encrypt\2'
+
+  - name: Generate the initramfs
+    shell: arch-chroot /mnt mkinitcpio -p linux
+    tags: mkinitcpio
   tags: initramfs
