@@ -14,8 +14,8 @@
 - name: Set the locale
   replace:
     path: /mnt/etc/locale.gen
-    regexp: "^#en_US.UTF-8.*"
-    replace: "en_US.UTF-8 UTF-8"
+    regexp: "^#(en_US.UTF-8.*)"
+    replace: '\1'
   tags: locale
 
 - name: Generate the locale
@@ -48,3 +48,10 @@
       127.0.1.1  {{ hostname }}.localdomain  {{ hostname }}
   tags:
     - hostname
+
+- name: Modify the mkinitcpio.conf HOOKS to add encrypt
+  replace:
+    path: /mnt/etc/mkinitcpio.conf
+    regexp: '^(HOOKS.*block)( filesystems.*)$'
+    replace: '\1 encrypt\2'
+  tags: initramfs
