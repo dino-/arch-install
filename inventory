@@ -15,4 +15,3 @@ new-system:
       ansible_connection: paramiko
       ansible_user: root  # Don't change this
       ansible_password: arch1  # No need to change if you've used this on the target
-      cryptroot: /dev/mapper/cryptroot  # Don't change this
