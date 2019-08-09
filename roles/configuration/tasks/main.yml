@@ -11,25 +11,24 @@
   shell: arch-chroot /mnt hwclock --systohc
   tags: clock
 
-- name: Set the locale
-  replace:
-    path: /mnt/etc/locale.gen
-    regexp: "^#(en_US.UTF-8.*)"
-    replace: '\1'
-  tags: locale
+- name: Setup locale
+  block:
+  - name: Set the locale in locale.gen
+    replace:
+      path: /mnt/etc/locale.gen
+      regexp: "^#(en_US.UTF-8.*)"
+      replace: '\1'
 
-- name: Generate the locale
-  shell: arch-chroot /mnt locale-gen
-  tags: locale
+  - name: Generate the locale
+    shell: arch-chroot /mnt locale-gen
 
-- name: Create the locale conf file
-  copy:
-    dest: /mnt/etc/locale.conf
-    content: "LANG=en_US.UTF-8\n"
-    force: no
-  tags:
-    - locale
-    - localeconf
+  - name: Create the locale conf file
+    copy:
+      dest: /mnt/etc/locale.conf
+      content: "LANG=en_US.UTF-8\n"
+      force: no
+    tags: localeconf
+  tags: locale
 
 - name: Set up hostname
   block:
