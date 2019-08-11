@@ -63,7 +63,7 @@ On the target machine
 
 Running it
 
-    $ ansible-playbook -i inventory/localhost.yml install.yml
+    # ansible-playbook -i inventory/localhost.yml install.yml
 
 *Be very careful what you run this on!* This playbook will destroy the hard
 drive set in the `drive` variable in `inventory/group_vars/all.yml`
