@@ -31,7 +31,7 @@ On the target machine
 - Boot the Arch installer
 - Connect to the internet
 - Set the root user's password to `arch1` with `passwd`
-- Start sshd `# systemctl start sshd`
+- Start sshd: `# systemctl start sshd`
 - Get the machine's IP for the ansible inventory file
 
 On the controller system
@@ -55,9 +55,9 @@ On the target machine
 
 - Boot the Arch installer
 - Connect to the internet
-- Install git and ansible `pacman -Sy git ansible`
-- Clone this project `git clone https://github.com/dino-/arch-install` and
-  enter the directory `cd arch-install`
+- Install git and ansible: `pacman -Sy git ansible`
+- Clone this project: `git clone https://github.com/dino-/arch-install` and
+  enter the directory: `cd arch-install`
 - Edit the file `inventory/group_vars/all.yml`. There are many things here that
   will be specific to your system's hardware and how you want it set up.
 
