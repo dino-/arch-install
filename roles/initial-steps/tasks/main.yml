@@ -13,4 +13,4 @@
   when: efivars.stat.exists == false
 
 - name: Update the system clock
-  shell: timedatectl set-ntp true
+  command: timedatectl set-ntp true

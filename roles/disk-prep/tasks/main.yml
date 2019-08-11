@@ -4,10 +4,11 @@
 ---
 
 - name: Partition the hard drive
-  shell: |
-    sgdisk --zap-all "{{ drive }}"
-    sgdisk --new=1:0:+512M --typecode=1:EF00 --change-name=1:boot "{{ drive }}"
-    sgdisk --largest-new=2 --typecode=2:8300 --change-name=2:root "{{ drive }}"
+  command: "sgdisk {{ item }} {{ drive }}"
+  with_items:
+    - --zap-all
+    - --new=1:0:+512M --typecode=1:EF00 --change-name=1:boot
+    - --largest-new=2 --typecode=2:8300 --change-name=2:root
   tags: partition
 
 - name: Create a temp file for the encryption key
@@ -28,11 +29,11 @@
     - keyfile
 
 - name: Create the encrypted partition
-  shell: cryptsetup --batch-mode luksFormat "{{ root_part }}" "{{ keyfile.path }}"
+  command: cryptsetup --batch-mode luksFormat "{{ root_part }}" "{{ keyfile.path }}"
   tags: encrypted
 
 - name: Open the encrypted partition
-  shell: cryptsetup open --key-file "{{ keyfile.path }}" "{{ root_part }}" cryptroot
+  command: cryptsetup open --key-file "{{ keyfile.path }}" "{{ root_part }}" cryptroot
   args:
     creates: "{{ cryptroot }}"
   tags: encrypted
@@ -40,7 +41,7 @@
 # Using shred here instead of the file module for extra security
 
 - name: Remove the keyfile
-  shell: shred -u "{{ keyfile.path }}"
+  command: shred -u "{{ keyfile.path }}"
   args:
     removes: "{{ keyfile.path }}"
   tags: encrypted

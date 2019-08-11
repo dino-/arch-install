@@ -4,11 +4,11 @@
 ---
 
 - name: Set the time zone
-  shell: arch-chroot /mnt ln -sf "/usr/share/zoneinfo/{{ zone }}" /etc/localtime
+  command: arch-chroot /mnt ln -sf "/usr/share/zoneinfo/{{ zone }}" /etc/localtime
   tags: zone
 
 - name: Configure the hardware clock
-  shell: arch-chroot /mnt hwclock --systohc
+  command: arch-chroot /mnt hwclock --systohc
   tags: clock
 
 - name: Setup locale
@@ -20,7 +20,7 @@
       replace: '\1'
 
   - name: Generate the locale
-    shell: arch-chroot /mnt locale-gen
+    command: arch-chroot /mnt locale-gen
 
   - name: Create the locale conf file
     copy:
@@ -56,18 +56,18 @@
       replace: '\1 encrypt\2'
 
   - name: Generate the initramfs
-    shell: arch-chroot /mnt mkinitcpio -p linux
+    command: arch-chroot /mnt mkinitcpio -p linux
     tags: mkinitcpio
   tags: initramfs
 
 - name: Configure the boot loader
   block:
   - name: Install systemd-boot
-    shell: arch-chroot /mnt bootctl --path=/boot install
+    command: arch-chroot /mnt bootctl --path=/boot install
     tags: bootctl
 
   - name: Discover the root partition's UUID
-    shell: blkid --match-tag=UUID --output=value {{ root_part }}
+    command: blkid --match-tag=UUID --output=value {{ root_part }}
     register: root_uuid
 
   - name: Create the bootloader loader config

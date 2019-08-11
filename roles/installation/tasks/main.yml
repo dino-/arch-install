@@ -13,7 +13,7 @@
   tags: mirror
 
 - name: Install the Arch base packages
-  shell: pacstrap /mnt base
+  command: pacstrap /mnt base base-devel vim
   args:
     creates: /mnt/bin
   tags: pacstrap
