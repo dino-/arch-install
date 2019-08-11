@@ -14,9 +14,6 @@ following features and choices:
 
 ## Using this playbook
 
-Edit the file `inventory/group_vars/all.yml`. There are many things here that
-will be specific to your system's hardware and how you want it set up.
-
 You can run this on a different machine than you're setting up (remote
 inventory) or on the new system itself (localhost inventory). This is
 determined by which inventory file you choose on the command line, examples
@@ -43,6 +40,8 @@ On the controller system
   above.
 - If this isn't the first run, you may also need to remove the target system's
   IP from the controller system's `.ssh/known_hosts` file for your user
+- Edit the file `inventory/group_vars/all.yml`. There are many things here that
+  will be specific to your system's hardware and how you want it set up.
 
 Running it
 
@@ -59,6 +58,8 @@ On the target machine
 - Install git and ansible `pacman -Sy git ansible`
 - Clone this project `git clone https://github.com/dino-/arch-install` and
   enter the directory `cd arch-install`
+- Edit the file `inventory/group_vars/all.yml`. There are many things here that
+  will be specific to your system's hardware and how you want it set up.
 
 Running it
 
