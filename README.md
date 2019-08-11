@@ -17,7 +17,7 @@ following features and choices:
 
 On the target machine
 
-- Boot the Arch USB
+- Boot the Arch installer
 - Connect to the internet
 - Set the root user's password to `arch1` with `passwd`
 - Start sshd `# systemctl start sshd`
@@ -25,8 +25,8 @@ On the target machine
 
 On the controller system
 
-- Edit the `inventory.yml` file, changing the IP to the one above and many of
-  the other variables. All configuration is in this file.
+- Edit the `inventory.yml` file, changing the IP to what we discovered above
+  and many of the other variables. All configuration is in this file.
 - If this isn't the first run, you may need to remove the target system's IP
   from the controller system's `.ssh/known_hosts` file for your user
 
