@@ -11,9 +11,23 @@ following features and choices:
 - No swap drive and no LVM
 - systemd-boot for the boot loader
 
+
 ## Using this playbook
 
-### Pre-Ansible
+Edit the file `inventory/group_vars/all.yml`. There are many things here that
+will be specific to your system's hardware and how you want it set up.
+
+You can run this on a different machine than you're setting up (remote
+inventory) or on the new system itself (localhost inventory). This is
+determined by which inventory file you choose on the command line, examples
+below.
+
+Note also that there are lots of tags on tasks and roles that can be used for
+debugging.
+
+### Using it on a remote system
+
+#### Pre-Ansible
 
 On the target machine
 
@@ -21,22 +35,37 @@ On the target machine
 - Connect to the internet
 - Set the root user's password to `arch1` with `passwd`
 - Start sshd `# systemctl start sshd`
-- Get the machine's IP for the ansible inventory
+- Get the machine's IP for the ansible inventory file
 
 On the controller system
 
-- Edit the `inventory.yml` file, changing the IP to what we discovered above
-  and many of the other variables. All configuration is in this file.
-- If this isn't the first run, you may need to remove the target system's IP
-  from the controller system's `.ssh/known_hosts` file for your user
+- Edit the `inventory/remote.yml` file, changing the IP to what we discovered
+  above.
+- If this isn't the first run, you may also need to remove the target system's
+  IP from the controller system's `.ssh/known_hosts` file for your user
 
-### Running it
+Running it
 
-    $ ansible-playbook -i inventory.yml install.yml
+    $ ansible-playbook -i inventory/remote.yml install.yml
 
-For development and debugging, use `--tags` to limit things:
+### Using it on localhost
 
-    $ ansible-playbook -i inventory.yml install.yml --tags="pacstrap,genfstab"
+#### Pre-Ansible
+
+On the target machine
+
+- Boot the Arch installer
+- Connect to the internet
+- Install git and ansible `pacman -Sy git ansible`
+- Clone this project `git clone https://github.com/dino-/arch-install` and
+  enter the directory `cd arch-install`
+
+Running it
+
+    $ ansible-playbook -i inventory/localhost.yml install.yml
+
+*Be very careful what you run this on!* This playbook will destroy the hard
+drive set in the `drive` variable in `inventory/group_vars/all.yml`
 
 ### Post-installation
 

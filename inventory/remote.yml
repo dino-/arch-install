@@ -1,0 +1,6 @@
+all:
+  hosts:
+    192.168.1.232:  # Set this after getting the new system on the network
+      ansible_connection: paramiko
+      ansible_user: root
+      ansible_password: arch1

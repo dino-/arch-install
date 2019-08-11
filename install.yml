@@ -1,7 +1,7 @@
 # Setup is required before running this, see the README.md file
 
 ---
-- hosts: new-system
+- hosts: all
   gather_facts: True
   roles: 
     - role: initial-steps
