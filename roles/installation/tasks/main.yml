@@ -9,7 +9,7 @@
     state: present
     insertafter: "^$"
     firstmatch: yes
-    line: "{{ mirror }}"
+    line: "{{ mirror }}\n"
   tags: mirror
 
 - name: Install the Arch base packages

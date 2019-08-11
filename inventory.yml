@@ -7,7 +7,7 @@ new-system:
       root_part: /dev/sda2  # This too
       luks_pass: "foo bar baz"  # Change to something secure
       # Use a mirror you know is close and fast
-      mirror: "Server = http://mirror.umd.edu/archlinux/$repo/os/$arch\n"
+      mirror: "Server = http://mirror.umd.edu/archlinux/$repo/os/$arch"
       zone: America/New_York  # Relative to /usr/share/zoneinfo/
       hostname: mycoolmachine  # The new machine name
 
