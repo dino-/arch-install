@@ -25,18 +25,18 @@ On the target machine
 
 On the controller system
 
-- Edit the `inventory` file, changing the IP to the one above and many of the
-  other variables. All configuration is in this file.
+- Edit the `inventory.yml` file, changing the IP to the one above and many of
+  the other variables. All configuration is in this file.
 - If this isn't the first run, you may need to remove the target system's IP
   from the controller system's `.ssh/known_hosts` file for your user
 
 ### Running it
 
-    $ ansible-playbook -i inventory install.yml
+    $ ansible-playbook -i inventory.yml install.yml
 
 For development and debugging, use `--tags` to limit things:
 
-    $ ansible-playbook -i inventory install.yml --tags="pacstrap,genfstab"
+    $ ansible-playbook -i inventory.yml install.yml --tags="pacstrap,genfstab"
 
 ### Post-installation
 

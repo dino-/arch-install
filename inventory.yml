@@ -1,6 +1,6 @@
 new-system:
   hosts:
-    192.168.1.162:  # Set this after getting the new system on the network
+    192.168.1.232:  # Set this after getting the new system on the network
       # Set these variables for your new system
       drive: /dev/sda  # Set this to the drive we want to install Arch on
       boot_part: /dev/sda1  # Adjust this accordingly
