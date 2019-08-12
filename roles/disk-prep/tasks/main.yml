@@ -51,6 +51,7 @@
     dev: "{{ boot_part }}"
     fstype: vfat
     opts: -F32
+    force: yes
   tags: fsformat
 
 - name: Format the root partition
