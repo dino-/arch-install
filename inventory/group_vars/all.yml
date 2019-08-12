@@ -4,9 +4,10 @@
 hostname: mycoolmachine
 
 # Hard drive device and partition info
-drive: /dev/sda  # Set this to the drive we want to install Arch on
-boot_part: /dev/sda1  # Adjust this accordingly
-root_part: /dev/sda2  # This too
+# With PCIe SSDs these may be /dev/nvme0n1, /dev/nvme0n1p1 and /dev/nvme0n1p2
+drive: /dev/sdX  # Set this to the drive we want to install Arch on
+boot_part: /dev/sdX1  # Adjust this accordingly
+root_part: /dev/sdX2  # This too
 
 # Change to something secure!
 luks_pass: "foo bar baz"
