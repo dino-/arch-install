@@ -12,3 +12,5 @@
       tags: installation
     - role: configuration
       tags: configuration
+    - role: capsctrl
+      tags: capsctrl

@@ -1,0 +1,41 @@
+###############################################################################
+# Swap caps lock and left control in the kernel keymap
+###############################################################################
+---
+
+- name: Copy existing keymap file
+  copy:
+    src: "{{ keymap_dir }}/us.map.gz"
+    dest: "{{ keymap_dir }}/us-caps.map.gz"
+    remote_src: yes
+
+- name: gunzip the new keymap file
+  command: gunzip us-caps.map.gz
+  args:
+    chdir: "{{ keymap_dir }}"
+    creates: "{{ keymap_dir }}/us-caps.map"
+
+- name: Remap caps lock
+  replace:
+    path: "{{ keymap_dir }}/us-caps.map"
+    regexp: '^(keycode\s+29\s+=\s+)Control$'
+    replace: '\1Caps_Lock'
+
+- name: Remap left control
+  replace:
+    path: "{{ keymap_dir }}/us-caps.map"
+    regexp: '^(keycode\s+58\s+=\s+)Caps_Lock$'
+    replace: '\1Control'
+
+- name: gzip the new keymap file
+  command: gzip us-caps.map
+  args:
+    chdir: "{{ keymap_dir }}"
+    creates: "{{ keymap_dir }}/us-caps.map.gz"
+
+- name: Create or update vconsole.conf
+  lineinfile:
+    path: /mnt/etc/vconsole.conf
+    regexp: '^KEYMAP='
+    line: KEYMAP=us-caps
+    create: yes

@@ -22,6 +22,10 @@ below.
 Note also that there are lots of tags on tasks and roles that can be used for
 debugging.
 
+There's a role in this project to swap the caps lock and left control keys in
+the kernel keymap. This behavior isn't desired by many people. To suppress it,
+add this to your ansible-playbook commands: `--skip-tags=capsctrl`
+
 ### Using it on a remote system
 
 #### Pre-Ansible
