@@ -7,7 +7,7 @@
   command: "sgdisk {{ item }} {{ drive }}"
   with_items:
     - --zap-all
-    - --new=1:0:+512M --typecode=1:EF00 --change-name=1:boot
+    - --new=1:0:+260M --typecode=1:EF00 --change-name=1:boot
     - --largest-new=2 --typecode=2:8300 --change-name=2:root
   tags: partition
 
