@@ -1,4 +1,9 @@
-# Setup is required before running this, see the README.md file
+###############################################################################
+# Playbook for setting up a new Arch Linux system
+#
+# Preparation of the target system is required before running this, see the
+# README.md file
+###############################################################################
 
 ---
 - hosts: all
