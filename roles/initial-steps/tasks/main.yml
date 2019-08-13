@@ -12,5 +12,7 @@
     msg: Target system is not UEFI-capabile. Aborting.
   when: efivars.stat.exists == false
 
+# FIXME This needs to go into its own role as it needs to be done both on the live system and the newly-installed system.
+
 - name: Update the system clock
   command: timedatectl set-ntp true

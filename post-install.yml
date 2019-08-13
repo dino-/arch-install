@@ -1,0 +1,15 @@
+# This is intended to be run on the new system after its first boot
+# Will need to manually install, enable and start sshd
+
+---
+- hosts: all
+  gather_facts: True
+  roles: 
+    # Set the root user's password (from the all vars)
+    # Set up your personal user (also from the all vars)
+    - role: users
+      tags: users
+    # Enable ntp (again), see roles/initial-steps
+    # tune2fs
+    # sudoers, allow root for the wheel group (see notes)
+    # disable root console login
