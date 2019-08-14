@@ -13,7 +13,15 @@
   tags: mirror
 
 - name: Install the Arch base packages
-  command: pacstrap /mnt base base-devel vim
+  command:
+    argv:
+      - pacstrap
+      - /mnt
+      - base
+      - base-devel
+      - dialog  # Needed for wifi-menu
+      - vim
+      - wpa_supplicant  # Needed for wireless networking
   args:
     creates: /mnt/bin
   tags: pacstrap
