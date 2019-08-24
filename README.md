@@ -81,6 +81,32 @@ drive set in the `drive` variable in `inventory/group_vars/all.yml`
 - Use your machine
 
 
+## Development
+
+Much of this work was done by beating up a VirtualBox VM booted with the Arch
+installation media. Here are the critical specs of the machine I was using:
+
+System
+
+- Base Memory: 4096 MB
+- Processors: 2
+- EFI: Enabled
+- Acceleration: VT-x/AMD-V, Nested Paging, PAE/NX, KVM Paravirt
+
+Display
+
+- Video Memory: 128 MB
+- Graphics Controller: VBoxVGA
+
+Storage
+
+- Controller: SATA Port 0, 8 GB VDI
+
+Network
+
+- Bridged
+
+
 ## Contact
 
 Dino Morelli <dino@ui3.info>
