@@ -60,6 +60,10 @@
     fstype: ext4
   tags: fsformat
 
+- name: Set root partition reserved space
+  command: tune2fs -m 1.0 "{{ cryptroot }}"
+  tags: tune2fs
+
 # These mount tasks also modify the /etc/fstab file, which we really don't need
 # but I guess is harmless when done to the install media's root partition.
 
