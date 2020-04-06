@@ -12,16 +12,21 @@
     line: "{{ mirror }}\n"
   tags: mirror
 
-- name: Install the Arch base packages
+- name: Install essential packages
   command:
     argv:
       - pacstrap
       - /mnt
       - base
+      - linux
+      - linux-firmware
       - base-devel
-      - dialog  # Needed for wifi-menu
       - vim
-      - wpa_supplicant  # Needed for wireless networking
+      # If you'll be doing the whole shebang
+      #- netctl  # Nice wired/wireless manager with profiles
+      #- wpa_supplicant  # For wireless networking
+      #- dhcpcd  # For DHCP, of course
+      #- dialog  # For wifi-menu
   args:
     creates: /mnt/bin
   tags: pacstrap

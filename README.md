@@ -19,60 +19,111 @@ inventory) or on the new system itself (localhost inventory). This is
 determined by which inventory file you choose on the command line, examples
 below.
 
-Note also that there are lots of tags on tasks and roles that can be used for
-debugging.
-
 There's a role in this project to swap the caps lock and left control keys in
 the kernel keymap. This behavior isn't desired by many people. To suppress it,
 add this to your ansible-playbook commands: `--skip-tags=capsctrl`
 
-### Using it on a remote system
+### Remote execution
 
-#### Pre-Ansible
+Using a second, existing system (controller) to set up your new one (target).
 
-On the target machine
+#### On the target system
 
-- Boot the Arch installer
-- Connect to the internet
-- Set the root user's password to `arch1` with `passwd`
-- Start sshd: `# systemctl start sshd`
-- Get the machine's IP for the ansible inventory file
+Boot the Arch installer. It should connect itself to the internet if it can.
 
-On the controller system
+Set the root user's password to `arch1` with `passwd`
 
-- Edit the `inventory/remote.yml` file, changing the IP to what we discovered
-  above.
-- If this isn't the first run, you may also need to remove the target system's
-  IP from the controller system's `.ssh/known_hosts` file for your user
-- Edit the file `inventory/group_vars/all.yml`. There are many things here that
-  will be specific to your system's hardware and how you want it set up.
+Start sshd
 
-Running it
+    # systemctl start sshd
+
+Get the machine's IP for the ansible inventory file below
+
+    # ip addr
+
+#### On the controller system
+
+Download this project's files for the corresponding arch version
+
+    $ wget https://github.com/dino-/arch-install/archive/arch-install-archlinux-2020-04-01.tar.gz
+
+Unpack it and enter the directory
+
+    $ tar xzvf arch-install-archlinux-2020-04-01.tar.gz
+    $ cd arch-install-archlinux-2020-04-01
+
+Edit the file `inventory/remote.yml`, changing the IP to what we discovered
+above.
+
+Edit the file `inventory/group_vars/all.yml`. There are many things here that
+will be specific to your system's hardware and how you want it set up.
+
+If this isn't the first run, you may also need to remove the target system's IP
+from the controller system's `$HOME/.ssh/known_hosts` file for your user.
+
+Perform the installation
 
     $ ansible-playbook -i inventory/remote.yml install.yml
 
-### Using it on localhost
-
-#### Pre-Ansible
-
-On the target machine
-
-- Boot the Arch installer
-- Connect to the internet
-- Install git and ansible: `pacman -Sy git ansible`
-- Clone this project: `git clone https://github.com/dino-/arch-install` and
-  enter the directory: `cd arch-install`
-- Edit the file `inventory/group_vars/all.yml`. There are many things here that
-  will be specific to your system's hardware and how you want it set up.
-
-Running it
-
-    # ansible-playbook -i inventory/localhost.yml install.yml
+### localhost execution
 
 *Be very careful what you run this on!* This playbook will destroy the hard
 drive set in the `drive` variable in `inventory/group_vars/all.yml`
 
+On the target machine boot the Arch installer. It should connect itself to the
+internet if it can.
+
+There should be just barely enough space on the booted drive to install
+ansible, do that now.
+
+    # pacman -Sy ansible
+
+Download this project's files for the corresponding arch version
+
+    # wget https://github.com/dino-/arch-install/archive/arch-install-archlinux-2020-04-01.tar.gz
+
+Unpack it and enter the directory
+
+    # tar xzvf arch-install-archlinux-2020-04-01.tar.gz
+    # cd arch-install-archlinux-2020-04-01
+
+Edit the file `inventory/group_vars/all.yml`. There are many things here that
+will be specific to your system's hardware and how you want it set up.
+
+Perform the installation
+
+    # ansible-playbook -i inventory/localhost.yml install.yml
+
 ### Post-installation
+
+#### Configure networking
+
+You will want to configure networking before rebooting as you will lose the
+network set up by the installer. Follow the [Network configuration
+page](https://wiki.archlinux.org/index.php/Network_configuration) on archwiki.
+Many things are linked from here.
+
+If you just want simple dhcp with a wired interface, get the interface name
+from `ip addr` and then, on the new system:
+
+    # arch-chroot /mnt
+    # pacman -Sy dhcpcd
+    # systemctl enable dhcpcd\@enp0s3.service  # That interface name from above after the @
+    # exit
+
+I personally like using Arch's [netctl](https://wiki.archlinux.org/index.php/Netctl) 
+for mobile machines that change networks often as it can handle both wired and
+wireless with the same UI, has excellent cli support and can generate profiles.
+
+There are also some additional commented-out packages in
+`roles/installation/tasks/main.yml` if you want to let `pacstrap` do some of
+the installation work for you. Future TODO will be to make this conditional
+with `--extra-vars`
+
+Also, all this network business is covered in more detail in the archwiki pages
+linked in this section.
+
+#### What next?
 
 - Reboot the new system
 - Set the root user's password
@@ -96,7 +147,7 @@ System
 Display
 
 - Video Memory: 128 MB
-- Graphics Controller: VBoxVGA
+- Graphics Controller: VMSVGA
 
 Storage
 
@@ -105,6 +156,9 @@ Storage
 Network
 
 - Bridged
+
+Note also that there are lots of tags on tasks and roles that can be used for
+debugging.
 
 
 ## Contact
