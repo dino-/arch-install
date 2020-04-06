@@ -147,8 +147,16 @@ Network
 
 - Bridged
 
-Note also that there are lots of tags on tasks and roles that can be used for
-debugging.
+When using the VM, I often take snapshots during development to re-use some of
+the state. Here are some handy starting snapshot labels:
+
+    Before first boot
+    |- Booted live disk
+       |- Set root pw and started sshd
+          |- Current State
+
+In this ansible playbook there are lots of tags on tasks and roles that can be
+used for development/debugging.
 
 
 ## Contact
