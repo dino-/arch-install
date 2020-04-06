@@ -98,34 +98,24 @@ Perform the installation
 
 #### Configure networking
 
-You will want to configure networking before rebooting as you will lose the
-network set up by the installer. Follow the [Network configuration
-page](https://wiki.archlinux.org/index.php/Network_configuration) on archwiki.
-Many things are linked from here.
+I personally like using Arch's netctl for mobile machines that change networks
+often as it can handle both wired and wireless with the same UI, has excellent
+cli support and can generate profiles.
 
-If you just want simple dhcp with a wired interface, get the interface name
-from `ip addr` and then, on the new system:
+On that note, my installation role installs `netcl`, `wpa_supplicant`,
+`dialog`, and `dhcpcd` which can be configured after the first boot. If you
+need something different, feel free to comment that stuff out in
+`roles/installation/tasks/main.yml` and do your own thing.
 
-    # arch-chroot /mnt
-    # pacman -Sy dhcpcd
-    # systemctl enable dhcpcd\@enp0s3.service  # That interface name from above after the @
-    # exit
+Some helpful links on archwiki:
 
-I personally like using Arch's [netctl](https://wiki.archlinux.org/index.php/Netctl) 
-for mobile machines that change networks often as it can handle both wired and
-wireless with the same UI, has excellent cli support and can generate profiles.
-
-There are also some additional commented-out packages in
-`roles/installation/tasks/main.yml` if you want to let `pacstrap` do some of
-the installation work for you. Future TODO will be to make this conditional
-with `--extra-vars`
-
-Also, all this network business is covered in more detail in the archwiki pages
-linked in this section.
+- [Network configuration](https://wiki.archlinux.org/index.php/Network_configuration)
+- [netctl](https://wiki.archlinux.org/index.php/Netctl)
 
 #### What next?
 
 - Reboot the new system
+- Finish network configuration
 - Set the root user's password
 - Add users
 - Install software
