@@ -23,6 +23,35 @@ There's a role in this project to swap the caps lock and left control keys in
 the kernel keymap. This behavior isn't desired by many people. To suppress it,
 add this to your ansible-playbook commands: `--skip-tags=capsctrl`
 
+### localhost execution
+
+*Be very careful what you run this on!* This playbook will destroy the hard
+drive set in the `drive` variable in `inventory/group_vars/all.yml`
+
+On the target machine boot the Arch installer. It should connect itself to the
+internet if it can.
+
+There should be just barely enough space on the booted drive to install
+ansible, do that now.
+
+    # pacman -Sy ansible
+
+Download this project's files for the corresponding arch version
+
+    # wget https://github.com/dino-/arch-install/archive/arch-install-archlinux-2020-04-01.tar.gz
+
+Unpack it and enter the directory
+
+    # tar xzvf arch-install-archlinux-2020-04-01.tar.gz
+    # cd arch-install-archlinux-2020-04-01
+
+Edit the file `inventory/group_vars/all.yml`. There are many things here that
+will be specific to your system's hardware and how you want it set up.
+
+Perform the installation
+
+    # ansible-playbook -i inventory/localhost.yml install.yml
+
 ### Remote execution
 
 Using a second, existing system (controller) to set up your new one (target).
@@ -64,35 +93,6 @@ from the controller system's `$HOME/.ssh/known_hosts` file for your user.
 Perform the installation
 
     $ ansible-playbook -i inventory/remote.yml install.yml
-
-### localhost execution
-
-*Be very careful what you run this on!* This playbook will destroy the hard
-drive set in the `drive` variable in `inventory/group_vars/all.yml`
-
-On the target machine boot the Arch installer. It should connect itself to the
-internet if it can.
-
-There should be just barely enough space on the booted drive to install
-ansible, do that now.
-
-    # pacman -Sy ansible
-
-Download this project's files for the corresponding arch version
-
-    # wget https://github.com/dino-/arch-install/archive/arch-install-archlinux-2020-04-01.tar.gz
-
-Unpack it and enter the directory
-
-    # tar xzvf arch-install-archlinux-2020-04-01.tar.gz
-    # cd arch-install-archlinux-2020-04-01
-
-Edit the file `inventory/group_vars/all.yml`. There are many things here that
-will be specific to your system's hardware and how you want it set up.
-
-Perform the installation
-
-    # ansible-playbook -i inventory/localhost.yml install.yml
 
 ### Post-installation
 
