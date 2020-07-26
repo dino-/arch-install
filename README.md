@@ -112,12 +112,19 @@ Some helpful links on archwiki:
 - [Network configuration](https://wiki.archlinux.org/index.php/Network_configuration)
 - [netctl](https://wiki.archlinux.org/index.php/Netctl)
 
+#### Add a user to log in with
+
+You'll probably want one user other than root to log in with on the new system
+
+    # useradd -m -g users -G wheel,games,network,audio,optical,scanner -s /bin/bash archie
+    # passwd archie
+
 #### What next?
 
 - Reboot the new system
 - Finish network configuration
-- Set the root user's password
-- Add users
+- Set the root user's password if you want
+- Add other users
 - Install software
 - Use your machine
 
