@@ -20,3 +20,8 @@ mirror: "Server = http://mirror.umd.edu/archlinux/$repo/os/$arch"
 
 # Relative to /usr/share/zoneinfo/
 zone: America/New_York
+
+# Change these as needed and change this password immediately on the new
+# system!
+first_user: archie
+first_pw: archie1

@@ -111,19 +111,14 @@ Some helpful links on archwiki:
 
 - [Network configuration](https://wiki.archlinux.org/index.php/Network_configuration)
 - [netctl](https://wiki.archlinux.org/index.php/Netctl)
-
-#### Add a user to log in with
-
-You'll probably want one user other than root to log in with on the new system
-
-    # useradd -m -g users -G wheel,games,network,audio,optical,scanner -s /bin/bash archie
-    # passwd archie
+- [dhcpcd](https://wiki.archlinux.org/index.php/Dhcpcd)
 
 #### What next?
 
 - Reboot the new system
 - Finish network configuration
 - Set the root user's password if you want
+- Change the other user's password
 - Add other users
 - Install software
 - Use your machine
@@ -137,18 +132,20 @@ installation media. Here are the critical specs of the machine I was using:
 System
 
 - Base Memory: 4096 MB
-- Processors: 2
-- EFI: Enabled
+- Processors: 2 (or 1 is fine, whatever you want)
+- EFI: Enabled (IMPORTANT, the installer is expecting this to be an EFI/GPT
+  system)
 - Acceleration: VT-x/AMD-V, Nested Paging, PAE/NX, KVM Paravirt
 
 Display
 
 - Video Memory: 128 MB
-- Graphics Controller: VMSVGA
+- Graphics Controller: VMSVGA (VBoxVGA is rumored to work also but I've
+  experienced bugs)
 
 Storage
 
-- Controller: SATA Port 0, 8 GB VDI
+- Controller: SATA Port 0, 12 GB VDI
 
 Network
 
@@ -163,7 +160,8 @@ the state. Here are some handy starting snapshot labels:
           |- Current State
 
 In this ansible playbook there are lots of tags on tasks and roles that can be
-used for development/debugging.
+used for development/debugging. Use the `--tags` and `--skip-tags` switches
+with `ansible-playbook` to assist.
 
 
 ## Contact
