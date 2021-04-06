@@ -38,12 +38,12 @@ ansible, do that now.
 
 Download this project's files for the corresponding arch version
 
-    # wget https://github.com/dino-/arch-install/archive/arch-install-archlinux-2020-04-01.tar.gz
+    # wget https://github.com/dino-/arch-install/archive/refs/tags/20210401-1.tar.gz
 
 Unpack it and enter the directory
 
-    # tar xzvf arch-install-archlinux-2020-04-01.tar.gz
-    # cd arch-install-archlinux-2020-04-01
+    # tar xzvf 20210401-1.tar.gz
+    # cd arch-install-20200401-1
 
 Edit the file `inventory/group_vars/all.yml`. There are many things here that
 will be specific to your system's hardware and how you want it set up.
@@ -74,12 +74,12 @@ Get the machine's IP for the ansible inventory file below
 
 Download this project's files for the corresponding arch version
 
-    $ wget https://github.com/dino-/arch-install/archive/arch-install-archlinux-2020-04-01.tar.gz
+    # wget https://github.com/dino-/arch-install/archive/refs/tags/20210401-1.tar.gz
 
 Unpack it and enter the directory
 
-    $ tar xzvf arch-install-archlinux-2020-04-01.tar.gz
-    $ cd arch-install-archlinux-2020-04-01
+    # tar xzvf 20210401-1.tar.gz
+    # cd arch-install-20200401-1
 
 Edit the file `inventory/remote.yml`, changing the IP to what we discovered
 above.
