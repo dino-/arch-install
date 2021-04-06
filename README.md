@@ -28,22 +28,27 @@ add this to your ansible-playbook commands: `--skip-tags=capsctrl`
 *Be very careful what you run this on!* This playbook will destroy the hard
 drive set in the `drive` variable in `inventory/group_vars/all.yml`
 
-On the target machine boot the Arch installer. It should connect itself to the
-internet if it can.
+On the target machine boot the Arch installer. There will not be enough disk
+space to install the tools we need. At the Arch install media boot menu, press
+`e` to edit the kernel parameters and add this to the end:
 
-There should be just barely enough space on the booted drive to install
-ansible, do that now.
+    cow_spacesize=1G
 
-    # pacman -Sy ansible
+It should connect itself to the internet if it can see a DHCP server. If not,
+you'll need to figure that out using Arch wiki.
 
-Download this project's files for the corresponding arch version
+Once it's up and networked, we need to install some tools
 
-    # wget https://github.com/dino-/arch-install/archive/refs/tags/20210401-1.tar.gz
+    # pacman -Sy ansible wget
+
+Download the arch-install project's files for the corresponding arch version
+
+    # wget https://github.com/dino-/arch-install/archive/refs/tags/20210401-2.tar.gz
 
 Unpack it and enter the directory
 
-    # tar xzvf 20210401-1.tar.gz
-    # cd arch-install-20200401-1
+    # tar xzvf 20210401-2.tar.gz
+    # cd arch-install-20200401-2
 
 Edit the file `inventory/group_vars/all.yml`. There are many things here that
 will be specific to your system's hardware and how you want it set up.
@@ -74,12 +79,12 @@ Get the machine's IP for the ansible inventory file below
 
 Download this project's files for the corresponding arch version
 
-    # wget https://github.com/dino-/arch-install/archive/refs/tags/20210401-1.tar.gz
+    # wget https://github.com/dino-/arch-install/archive/refs/tags/20210401-2.tar.gz
 
 Unpack it and enter the directory
 
-    # tar xzvf 20210401-1.tar.gz
-    # cd arch-install-20200401-1
+    # tar xzvf 20210401-2.tar.gz
+    # cd arch-install-20200401-2
 
 Edit the file `inventory/remote.yml`, changing the IP to what we discovered
 above.
