@@ -22,6 +22,7 @@
       - linux-firmware
       - base-devel
       - vim
+      - pacman-contrib  # pacdiff, paccache
       # I like netctl for networking
       - netctl  # Nice wired/wireless manager with profiles
       - wpa_supplicant  # For wireless networking

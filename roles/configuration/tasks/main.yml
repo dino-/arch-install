@@ -81,6 +81,10 @@
       dest: /mnt/boot/loader/entries/arch.conf
   tags: bootloader
 
+- name: Enable paccache clean-up timer
+  command: arch-chroot /mnt systemctl enable paccache.timer
+  tags: paccache
+
 - name: Enable sudo for users in the `wheel` group
   replace:
     path: /mnt/etc/sudoers
