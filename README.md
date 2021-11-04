@@ -122,6 +122,7 @@ Some helpful links on archwiki:
 
 - Reboot the new system
 - Finish network configuration
+- If your drive is an SSD, enable the `fstrim.timer` systemd unit
 - Set the root user's password if you want
 - Change the other user's password
 - Add other users
