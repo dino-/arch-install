@@ -47,8 +47,8 @@ Download the arch-install project's files for the corresponding arch version
 
 Unpack it and enter the directory
 
-    # tar xzvf 20210401-2.tar.gz
-    # cd arch-install-20200401-2
+    # tar xvf 20211101-1.tar.gz
+    # cd arch-install-20211101-1
 
 Edit the file `inventory/group_vars/all.yml`. There are many things here that
 will be specific to your system's hardware and how you want it set up.
@@ -83,8 +83,8 @@ Download this project's files for the corresponding arch version
 
 Unpack it and enter the directory
 
-    # tar xzvf 20210401-2.tar.gz
-    # cd arch-install-20200401-2
+    # tar xvf 20211101-1.tar.gz
+    # cd arch-install-20211101-1
 
 Edit the file `inventory/remote.yml`, changing the IP to what we discovered
 above.
