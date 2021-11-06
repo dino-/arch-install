@@ -29,13 +29,21 @@ add this to your ansible-playbook commands: `--skip-tags=capsctrl`
 drive set in the `drive` variable in `inventory/group_vars/all.yml`
 
 On the target machine boot the Arch installer. There will not be enough disk
-space to install the tools we need. At the Arch install media boot menu, press
-`e` to edit the kernel parameters and add this to the end:
+space to install the tools we need.
+
+We can fix this in a few ways, here are two
+
+1. At the Arch install media boot menu, press `e` to edit the kernel parameters
+   and add this to the end:
 
     cow_spacesize=1G
 
-It should connect itself to the internet if it can see a DHCP server. If not,
-you'll need to figure that out using Arch wiki.
+2. After boot, issue this command to remount the disk with a bigger size:
+
+    mount -o remount,size=1G /run/archiso/cowspace
+
+The installation media should connect itself to the internet if it can see a
+DHCP server. If not, you'll need to figure that out using Arch wiki.
 
 Once it's up and networked, we need to install some tools
 
