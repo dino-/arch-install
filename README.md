@@ -51,12 +51,12 @@ Once it's up and networked, we need to install some tools
 
 Download the arch-install project's files for the corresponding arch version
 
-    # wget https://github.com/dino-/arch-install/archive/refs/tags/20210401-2.tar.gz
+    # wget https://github.com/dino-/arch-install/archive/refs/tags/20220101-1.tar.gz
 
 Unpack it and enter the directory
 
-    # tar xvf 20211101-1.tar.gz
-    # cd arch-install-20211101-1
+    # tar xvf 20220101-1.tar.gz
+    # cd arch-install-20220101-1
 
 Edit the file `inventory/group_vars/all.yml`. There are many things here that
 will be specific to your system's hardware and how you want it set up.
@@ -85,14 +85,18 @@ Get the machine's IP for the ansible inventory file below
 
 #### On the controller system
 
+Make sure you have the necessary tools
+
+    # pacman -Sy --needed ansible wget
+
 Download this project's files for the corresponding arch version
 
-    # wget https://github.com/dino-/arch-install/archive/refs/tags/20210401-2.tar.gz
+    $ wget https://github.com/dino-/arch-install/archive/refs/tags/20220101-1.tar.gz
 
 Unpack it and enter the directory
 
-    # tar xvf 20211101-1.tar.gz
-    # cd arch-install-20211101-1
+    $ tar xvf 20220101-1.tar.gz
+    $ cd arch-install-20220101-1
 
 Edit the file `inventory/remote.yml`, changing the IP to what we discovered
 above.
