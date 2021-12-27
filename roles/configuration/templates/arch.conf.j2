@@ -1,4 +1,4 @@
 title    Arch Linux
 linux    /vmlinuz-linux
 initrd   /initramfs-linux.img
-options  cryptdevice=UUID={{ root_uuid.stdout }}:cryptroot:allow-discards root={{ cryptroot }} rw
+options  root="UUID={{ root_uuid.stdout }}" rw
