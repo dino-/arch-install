@@ -18,11 +18,13 @@
       - pacstrap
       - /mnt
       - base
+      - base-devel
       - linux
       - linux-firmware
-      - base-devel
-      - vim
+      - man-db
+      - openssh
       - pacman-contrib  # pacdiff, paccache
+      - vim
       # I like netctl for networking
       - netctl  # Nice wired/wireless manager with profiles
       - wpa_supplicant  # For wireless networking

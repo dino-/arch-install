@@ -85,6 +85,10 @@
   command: arch-chroot /mnt systemctl enable paccache.timer
   tags: paccache
 
+- name: Enable the ssh daemon
+  command: arch-chroot /mnt systemctl enable sshd
+  tags: ssh
+
 - name: Enable sudo for users in the `wheel` group
   replace:
     path: /mnt/etc/sudoers
