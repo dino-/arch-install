@@ -5,15 +5,23 @@ hostname: mycoolmachine
 
 # Hard drive device and partition info
 # With PCIe SSDs these may be /dev/nvme0n1, /dev/nvme0n1p1 and /dev/nvme0n1p2
-drive: /dev/sdX  # Set this to the drive we want to install Arch on
-boot_part: /dev/sdX1  # Adjust this accordingly
-root_part: /dev/sdX2  # This too
+# In this configuration, we're combining two PVs in the volume group into one
+# LV for the root partition.
+drive0: /dev/nvme0n1
+drive1: /dev/nvme1n1
+boot_part: /dev/nvme0n1p1
+root_part0: /dev/nvme0n1p2
+root_part1: /dev/nvme1n1p1
 
 # Change to something secure!
 luks_pass: "foo bar baz"
 
-# Probably will never change this
-cryptroot: /dev/mapper/cryptroot
+# Probably won't need to change these
+volume_group: vg1
+# The logical volume for our entire / partition which is encrypted
+lvroot: /dev/vg1/cryptroot
+# After cryptsetup open, this is what we mount as /
+cryptroot: /dev/mapper/root
 
 # Swap file
 swap_path: /swapfile
