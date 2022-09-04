@@ -53,7 +53,7 @@
     replace:
       path: /mnt/etc/mkinitcpio.conf
       regexp: '^(HOOKS.*block)( filesystems.*)$'
-      replace: '\1 encrypt\2'
+      replace: '\1 lvm2 encrypt\2'
 
   - name: Generate the initramfs
     command: arch-chroot /mnt mkinitcpio -p linux
@@ -67,8 +67,8 @@
     tags: bootctl
 
   - name: Discover the root partition's UUID
-    command: blkid --match-tag=UUID --output=value {{ root_part }}
-    register: root_uuid
+    command: blkid --match-tag=UUID --output=value {{ lvroot }}
+    register: lv_root_uuid
 
   - name: Create the bootloader loader config
     copy:

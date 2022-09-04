@@ -3,13 +3,32 @@
 ###############################################################################
 ---
 
-- name: Partition the hard drive
-  command: "sgdisk {{ item }} {{ drive }}"
+- name: Partition the first hard drive
+  command: "sgdisk {{ item }} {{ drive0 }}"
   with_items:
     - --zap-all
     - --new=1:0:+512M --typecode=1:EF00 --change-name=1:boot
-    - --largest-new=2 --typecode=2:8300 --change-name=2:root
+    - --largest-new=2 --typecode=2:8309 --change-name=2:root0
   tags: partition
+
+- name: Partition the second hard drive
+  command: "sgdisk {{ item }} {{ drive1 }}"
+  with_items:
+    - --zap-all
+    - --largest-new=1 --typecode=1:8309 --change-name=1:root1
+  tags: partition
+
+- name: Create the LVM2 physical volumes
+  command: "pvcreate {{ item }}"
+  with_items:
+    - "{{ root_part0 }}"
+    - "{{ root_part1 }}"
+
+- name: Create the LVM2 volume group
+  command: "vgcreate {{ volume_group }} {{ root_part0 }} {{ root_part1 }}"
+
+- name: Create the LVM2 logical volume
+  command: "lvcreate -l 100%FREE -n cryptroot {{ volume_group }}"
 
 - name: Create a temp file for the encryption key
   tempfile:
@@ -29,11 +48,11 @@
     - keyfile
 
 - name: Create the encrypted partition
-  command: cryptsetup --batch-mode luksFormat "{{ root_part }}" "{{ keyfile.path }}"
+  command: cryptsetup --batch-mode luksFormat "{{ lvroot }}" "{{ keyfile.path }}"
   tags: encrypted
 
 - name: Open the encrypted partition
-  command: cryptsetup open --key-file "{{ keyfile.path }}" "{{ root_part }}" cryptroot
+  command: cryptsetup open --key-file "{{ keyfile.path }}" "{{ lvroot }}" root
   args:
     creates: "{{ cryptroot }}"
   tags: encrypted
