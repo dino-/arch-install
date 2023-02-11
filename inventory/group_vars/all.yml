@@ -9,6 +9,12 @@ drive: /dev/sdX  # Set this to the drive we want to install Arch on
 boot_part: /dev/sdX1  # Adjust this accordingly
 root_part: /dev/sdX2  # This too
 
+# Swap file
+swap_path: /swapfile
+# This value is in megabytes and will result in a 32G swap file
+# For a much smaller one (say for testing), try 512 which will make a 0.5G swap file
+swap_size: 32768
+
 # Use a mirror you know is close and fast
 mirror: "Server = http://mirror.umd.edu/archlinux/$repo/os/$arch"
 
