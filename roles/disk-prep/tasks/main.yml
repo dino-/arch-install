@@ -83,3 +83,15 @@
     fstype: auto
     state: mounted
   tags: mount
+
+- name: Create the file to be used for swap space
+  command: dd if=/dev/zero of=/mnt{{ swap_path }} bs=1M count={{ swap_size }}
+  tags: swap
+
+- name: Set the swap file permissions
+  file: path=/mnt{{ swap_path }} owner=root group=root mode=0600
+  tags: swap
+
+- name: Format the swap file
+  command: mkswap -U clear /mnt{{ swap_path }}
+  tags: swap

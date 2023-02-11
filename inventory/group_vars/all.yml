@@ -15,6 +15,12 @@ luks_pass: "foo bar baz"
 # Probably will never change this
 cryptroot: /dev/mapper/cryptroot
 
+# Swap file
+swap_path: /swapfile
+# This value is in megabytes and will result in a 32G swap file
+# For a much smaller one (say for testing), try 512 which will make a 0.5G swap file
+swap_size: 32768
+
 # Use a mirror you know is close and fast
 mirror: "Server = http://mirror.umd.edu/archlinux/$repo/os/$arch"
 

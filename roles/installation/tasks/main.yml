@@ -35,3 +35,9 @@
 - name: Generate the fstab file
   shell: genfstab -U /mnt >> /mnt/etc/fstab
   tags: genfstab
+
+- name: Add the swap space to the fstab
+  lineinfile:
+    path: /mnt/etc/fstab
+    line: "{{ swap_path }}  none  swap  defaults  0  0"
+  tags: swap
