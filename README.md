@@ -34,7 +34,7 @@ space to install the tools we need.
 We can fix this in a few ways, here are two
 
 1. At the Arch install media boot menu, press `e` to edit the kernel parameters
-   and add this to the end:
+   and add this to the end of the line that starts with `linux`:
 
     cow_spacesize=1G
 
