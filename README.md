@@ -124,6 +124,12 @@ On that note, my installation role installs `netcl`, `wpa_supplicant`,
 need something different, feel free to comment that stuff out in
 `roles/installation/tasks/main.yml` and do your own thing.
 
+If planning to use dhcp and not netctl, as with a machine with an ethernet
+connection that never changes, enable and start these services:
+
+    # systemctl enable --now dhcpcd
+    # systemctl enable --now systemd-resolved
+
 Some helpful links on archwiki:
 
 - [Network configuration](https://wiki.archlinux.org/index.php/Network_configuration)
