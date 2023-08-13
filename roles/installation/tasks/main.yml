@@ -16,6 +16,7 @@
   command:
     argv:
       - pacstrap
+      - -K
       - /mnt
       - base
       - base-devel
