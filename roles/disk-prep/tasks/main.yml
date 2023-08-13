@@ -58,6 +58,7 @@
   filesystem:
     dev: "{{ cryptroot }}"
     fstype: ext4
+    force: yes
   tags: fsformat
 
 - name: Set root partition reserved space
