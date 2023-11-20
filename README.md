@@ -115,25 +115,29 @@ Perform the installation
 
 #### Configure networking
 
-I personally like using Arch's netctl for mobile machines that change networks
+I personally like using NetworkManager for mobile machines that change networks
 often as it can handle both wired and wireless with the same UI, has excellent
 cli support and can generate profiles.
 
-On that note, my installation role installs `netcl`, `wpa_supplicant`,
-`dialog`, and `dhcpcd` which can be configured after the first boot. If you
-need something different, feel free to comment that stuff out in
+On that note, my installation role installs `networkmanager` which can be
+configured after the first boot by enabling and starting the
+NetworkManager.service and then using nmcli and nmtui.
+
+If you need something different, feel free to comment that stuff out in
 `roles/installation/tasks/main.yml` and do your own thing.
 
-If planning to use dhcp and not netctl, as with a machine with an ethernet
-connection that never changes, enable and start these services:
+If planning to use dhcp and not NetworkManager, as with a machine with an
+ethernet connection that never changes, install, enable and start these
+services:
 
+    # pacman -S dhcpcd wpa_supplicant
     # systemctl enable --now dhcpcd
     # systemctl enable --now systemd-resolved
 
 Some helpful links on archwiki:
 
 - [Network configuration](https://wiki.archlinux.org/index.php/Network_configuration)
-- [netctl](https://wiki.archlinux.org/index.php/Netctl)
+- [NetworkManager](https://wiki.archlinux.org/title/NetworkManager)
 - [dhcpcd](https://wiki.archlinux.org/index.php/Dhcpcd)
 
 #### What next?

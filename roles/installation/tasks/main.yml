@@ -26,11 +26,7 @@
       - openssh
       - pacman-contrib  # pacdiff, paccache
       - vim
-      # I like netctl for networking
-      - netctl  # Nice wired/wireless manager with profiles
-      - wpa_supplicant  # For wireless networking
-      - dialog  # For wifi-menu
-      - dhcpcd  # For DHCP, of course
+      - networkmanager
   args:
     creates: /mnt/bin
   tags: pacstrap
