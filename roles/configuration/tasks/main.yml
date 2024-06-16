@@ -98,9 +98,14 @@
   tags: sudoers
 
 - name: Create the initial user account
+  command: arch-chroot /mnt useradd -m -g users -G wheel,games,network,audio,optical,scanner -s /bin/bash "{{ first_user }}"
+  tags: add_user
+
+- name: Set the initial user account password
   block:
-  - name: Create the initial user account
-    command: arch-chroot /mnt useradd -m -g users -G wheel,games,network,audio,optical,scanner -s /bin/bash "{{ first_user }}"
+  # passlib is needed for the password_hash() function used here. Easiest way to install is pacman
+  - name: Install python passlib library
+    command: pacman -S --noconfirm python-passlib
   - name: Set the initial user account password
     command: arch-chroot /mnt usermod --password "{{ first_pw | password_hash('sha512') }}" "{{ first_user }}"
-  tags: add_user
+  tags: set_password
