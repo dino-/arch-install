@@ -25,6 +25,7 @@
       - man-db
       - openssh
       - pacman-contrib  # pacdiff, paccache
+      - pkgfile
       - vim
       - networkmanager
   args:
