@@ -49,11 +49,11 @@
 
 - name: Configure initramfs
   block:
-  - name: Modify the mkinitcpio.conf HOOKS to add encrypt
+  - name: Modify the mkinitcpio.conf HOOKS to add lvm2 encrypt resume
     replace:
       path: /mnt/etc/mkinitcpio.conf
       regexp: '^(HOOKS.*block)( filesystems.*)$'
-      replace: '\1 lvm2 encrypt\2'
+      replace: '\1 lvm2 encrypt resume\2'
 
   - name: Generate the initramfs
     command: arch-chroot /mnt mkinitcpio -p linux

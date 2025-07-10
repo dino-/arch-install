@@ -11,21 +11,22 @@
     - --largest-new=2 --typecode=2:8309 --change-name=2:root0
   tags: partition
 
-- name: Partition the second hard drive
-  command: "sgdisk {{ item }} {{ drive1 }}"
-  with_items:
-    - --zap-all
-    - --largest-new=1 --typecode=1:8309 --change-name=1:root1
-  tags: partition
+# - name: Partition the second hard drive
+#   command: "sgdisk {{ item }} {{ drive1 }}"
+#   with_items:
+#     - --zap-all
+#     - --largest-new=1 --typecode=1:8309 --change-name=1:root1
+#   tags: partition
 
 - name: Create the LVM2 physical volumes
   command: "pvcreate {{ item }}"
   with_items:
     - "{{ root_part0 }}"
-    - "{{ root_part1 }}"
+#     - "{{ root_part1 }}"
 
 - name: Create the LVM2 volume group
-  command: "vgcreate {{ volume_group }} {{ root_part0 }} {{ root_part1 }}"
+  command: "vgcreate {{ volume_group }} {{ root_part0 }}"
+#   command: "vgcreate {{ volume_group }} {{ root_part0 }} {{ root_part1 }}"
 
 - name: Create the LVM2 logical volume
   command: "lvcreate -l 100%FREE -n cryptroot {{ volume_group }}"
