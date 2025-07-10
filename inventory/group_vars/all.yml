@@ -5,22 +5,20 @@ hostname: mycoolmachine
 
 # Hard drive device and partition info
 # With PCIe SSDs these may be /dev/nvme0n1, /dev/nvme0n1p1 and /dev/nvme0n1p2
-# In this configuration, we're combining two PVs in the volume group into one
-# LV for the root partition.
-drive0: /dev/nvme0n1
-boot_part: /dev/nvme0n1p1
-root_pv0: /dev/nvme0n1p2
+# or, maybe more traditionally, /dev/sda, /dev/sda1 and /dev/sda2
+drive0: /dev/nvmeXn1
+boot_part: /dev/nvmeXn1p1
+root_pv0: /dev/nvmeXn1p2
 
 # If you are combining two drives into one big storage with LVM2, uncomment
 # these and set them correctly
-# drive1: /dev/nvme1n1
-# root_pv1: /dev/nvme1n1p1
+# drive1: /dev/nvmeYn1
+# root_pv1: /dev/nvmeYn1p1
 
 # This used to be "512M" but these days it's common to use "1G"
 boot_part_size: "1G"
 
 # Change to something secure!
-# Comment luks_pass out to disable full drive encryption altogether
 luks_pass: "foo bar baz"
 
 # Probably won't need to change these
