@@ -24,9 +24,9 @@
   - name: Create the LVM2 physical volume
     command: "pvcreate {{ item }}"
     with_items:
-      - "{{ root_part0 }}"
+      - "{{ root_pv0 }}"
   - name: Create the LVM2 volume group
-    command: "vgcreate {{ volume_group }} {{ root_part0 }}"
+    command: "vgcreate {{ volume_group }} {{ root_pv0 }}"
   when: drive1 is not defined
 
 - name: LVM2 pv and vg tasks
@@ -34,10 +34,10 @@
   - name: Create the LVM2 physical volumes
     command: "pvcreate {{ item }}"
     with_items:
-      - "{{ root_part0 }}"
-      - "{{ root_part1 }}"
+      - "{{ root_pv0 }}"
+      - "{{ root_pv1 }}"
   - name: Create the LVM2 volume group
-    command: "vgcreate {{ volume_group }} {{ root_part0 }} {{ root_part1 }}"
+    command: "vgcreate {{ volume_group }} {{ root_pv0 }} {{ root_pv1 }}"
   when: drive1 is defined
 
 - name: Create the LVM2 logical volume
@@ -67,7 +67,7 @@
 - name: Open the encrypted partition
   command: cryptsetup open --key-file "{{ keyfile.path }}" "/dev/{{ volume_group }}/{{ root_lv }}" root
   args:
-    creates: "{{ cryptroot }}"
+    creates: "{{ root_part }}"
   tags: encrypted
 
 # Using shred here instead of the file module for extra security
@@ -88,13 +88,13 @@
 
 - name: Format the root partition
   filesystem:
-    dev: "{{ cryptroot }}"
+    dev: "{{ root_part }}"
     fstype: ext4
     force: yes
   tags: fsformat
 
 - name: Set root partition reserved space
-  command: tune2fs -m 1.0 "{{ cryptroot }}"
+  command: tune2fs -m 1.0 "{{ root_part }}"
   tags: tune2fs
 
 # These mount tasks also modify the /etc/fstab file, which we really don't need
@@ -103,7 +103,7 @@
 - name: Mount the new root partition
   mount:
     path: /mnt
-    src: "{{ cryptroot }}"
+    src: "{{ root_part }}"
     fstype: auto
     state: mounted
   tags: mount
