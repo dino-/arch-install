@@ -13,6 +13,10 @@
       tags: initial-steps
     - role: disk-prep
       tags: disk-prep
+    - role: encryption
+      tags: encryption
+    - role: format-and-mount
+      tags: format-and-mount
     - role: installation
       tags: installation
     - role: configuration

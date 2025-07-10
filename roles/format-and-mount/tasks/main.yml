@@ -1,0 +1,54 @@
+###############################################################################
+# Format the partitions and mount them for installation
+###############################################################################
+---
+
+- name: Format the boot partition
+  filesystem:
+    dev: "{{ boot_part }}"
+    fstype: vfat
+    opts: -F32
+    force: yes
+  tags: fsformat
+
+- name: Format the root partition
+  filesystem:
+    dev: "{{ root_part }}"
+    fstype: ext4
+    force: yes
+  tags: fsformat
+
+- name: Set root partition reserved space
+  command: tune2fs -m 1.0 "{{ root_part }}"
+  tags: tune2fs
+
+# These mount tasks also modify the /etc/fstab file, which we really don't need
+# but I guess is harmless when done to the install media's root partition.
+
+- name: Mount the new root partition
+  mount:
+    path: /mnt
+    src: "{{ root_part }}"
+    fstype: auto
+    state: mounted
+  tags: mount
+
+- name: Mount the new boot partition
+  mount:
+    path: /mnt/boot
+    src: "{{ boot_part }}"
+    fstype: auto
+    state: mounted
+  tags: mount
+
+- name: Create the file to be used for swap space
+  command: dd if=/dev/zero of=/mnt{{ swap_path }} bs=1M count={{ swap_size }}
+  tags: swap
+
+- name: Set the swap file permissions
+  file: path=/mnt{{ swap_path }} owner=root group=root mode=0600
+  tags: swap
+
+- name: Format the swap file
+  command: mkswap -U clear /mnt{{ swap_path }}
+  tags: swap

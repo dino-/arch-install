@@ -1,0 +1,39 @@
+###############################################################################
+# Prepare the hard drive and mount the partitions
+###############################################################################
+---
+
+- name: Create a temp file for the encryption key
+  tempfile:
+    state: file
+  register: keyfile
+  tags:
+    - encrypted
+    - keyfile
+
+- name: Put encryption key in the temp file
+  copy:
+    dest: "{{ keyfile.path }}"
+    content: "{{ luks_pass }}"
+    force: yes
+  tags:
+    - encrypted
+    - keyfile
+
+- name: Create the encrypted partition
+  command: cryptsetup --batch-mode luksFormat "/dev/{{ volume_group }}/{{ root_lv }}" "{{ keyfile.path }}"
+  tags: encrypted
+
+- name: Open the encrypted partition
+  command: cryptsetup open --key-file "{{ keyfile.path }}" "/dev/{{ volume_group }}/{{ root_lv }}" root
+  args:
+    creates: "{{ root_part }}"
+  tags: encrypted
+
+# Using shred here instead of the file module for extra security
+
+- name: Remove the keyfile
+  command: shred -u "{{ keyfile.path }}"
+  args:
+    removes: "{{ keyfile.path }}"
+  tags: encrypted
