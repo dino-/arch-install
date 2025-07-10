@@ -8,7 +8,6 @@ following features and choices:
 - UEFI bios and GPT partitioning
 - An unencrypted ESD boot partition
 - Full drive encryption of the root partition with dm-crypt/luks
-- No swap drive and no LVM
 - systemd-boot for the boot loader
 
 
