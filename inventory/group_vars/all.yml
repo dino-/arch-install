@@ -13,6 +13,9 @@ boot_part: /dev/nvme0n1p1
 root_part0: /dev/nvme0n1p2
 root_part1: /dev/nvme1n1p1
 
+# This used to be "512M" but these days it's common to use "1G"
+boot_part_size: "1G"
+
 # Change to something secure!
 luks_pass: "foo bar baz"
 
