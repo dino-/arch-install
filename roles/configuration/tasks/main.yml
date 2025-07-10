@@ -67,7 +67,7 @@
     tags: bootctl
 
   - name: Discover the root partition's UUID
-    command: blkid --match-tag=UUID --output=value {{ lvroot }}
+    command: blkid --match-tag=UUID --output=value "/dev/{{ volume_group }}/{{ root_lv }}"
     register: lv_root_uuid
 
   - name: Create the bootloader loader config

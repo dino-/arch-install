@@ -8,21 +8,26 @@ hostname: mycoolmachine
 # In this configuration, we're combining two PVs in the volume group into one
 # LV for the root partition.
 drive0: /dev/nvme0n1
-drive1: /dev/nvme1n1
 boot_part: /dev/nvme0n1p1
 root_part0: /dev/nvme0n1p2
-root_part1: /dev/nvme1n1p1
+
+# If you are combining two drives into one big storage with LVM2, uncomment
+# these and set them correctly
+# drive1: /dev/nvme1n1
+# root_part1: /dev/nvme1n1p1
 
 # This used to be "512M" but these days it's common to use "1G"
 boot_part_size: "1G"
 
 # Change to something secure!
+# Comment luks_pass out to disable full drive encryption altogether
 luks_pass: "foo bar baz"
 
 # Probably won't need to change these
 volume_group: vg1
 # The logical volume for our entire / partition which is encrypted
-lvroot: /dev/vg1/cryptroot
+root_lv: cryptroot
+# lvroot: /dev/vg1/cryptroot
 # After cryptsetup open, this is what we mount as /
 cryptroot: /dev/mapper/root
 
