@@ -70,6 +70,16 @@
     command: blkid --match-tag=UUID --output=value "/dev/{{ volume_group }}/{{ root_lv }}"
     register: root_lv_uuid
 
+  - name: Set kernel parameters for NVidia hardware
+    shell: |
+      lspci | grep -q -i nvidia
+      if [ $? -eq 0 ]
+        then echo " nomodeset nouveau.modeset=0"
+        else echo ""
+      fi
+      exit 0
+    register: nvidia_params
+
   - name: Create the bootloader loader config
     copy:
       src: loader.conf

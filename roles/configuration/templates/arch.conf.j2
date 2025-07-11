@@ -1,4 +1,4 @@
 title    Arch Linux
 linux    /vmlinuz-linux
 initrd   /initramfs-linux.img
-options  cryptdevice=UUID={{ root_lv_uuid.stdout }}:root:allow-discards root={{ root_part }} rw nomodeset nouveau.modeset=0
+options  cryptdevice=UUID={{ root_lv_uuid.stdout }}:root:allow-discards root={{ root_part }} rw{{ nvidia_params.stdout }}
